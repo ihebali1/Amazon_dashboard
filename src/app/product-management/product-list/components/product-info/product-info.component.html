@@ -1,0 +1,207 @@
+<div class="p-10" *ngIf="productInfo">
+  <form [formGroup]="vitalInfoForm">
+    <div class="row">
+      <h2>
+        حالة المنتج:
+        <label *ngIf="productInfo.status == 'APPROVED'"> موافق عليه</label>
+        <label *ngIf="productInfo.status == 'REJECTED'"> مرفوض</label>
+        <label *ngIf="productInfo.status == 'PENDING'"> قيد المراجعة</label>
+      
+      </h2>
+      <h4>
+        <label *ngIf="productInfo.status == 'REJECTED'">سبب الرفض : {{productInfo?.rejectReason}} </label>
+      </h4>
+    </div>
+    <hr />
+    <div class="grid grid-cols-12 gap-4">
+      <div *ngIf="productInfo.type == 'SIMPLE_LISTING'">
+        <label class="title">معرف المنتج</label>
+      </div>
+      <div *ngIf="productInfo.type == 'SIMPLE_LISTING'" class="col-span-11">
+       
+    
+            <mat-form-field appearance="outline" class="w-full" >
+              <mat-label>المعرف</mat-label>
+              <input
+                matInput
+                formControlName="productId"
+                type="text"
+                readonly
+                placeholder="567373893"
+              />
+            </mat-form-field>
+     
+      
+            <mat-form-field appearance="outline" class="w-full" >
+              <mat-label>نوع المعرف</mat-label>
+              <input
+                matInput
+                formControlName="productIdType"
+                type="text"
+                readonly
+                placeholder="567373893"
+              />
+            </mat-form-field>
+          
+        
+      </div>
+      <div>
+        <label>تسمية المنتج </label>
+      </div>
+      <div class="col-span-11">
+       
+      
+            <mat-form-field appearance="outline" class="w-full" >
+              <mat-label>بالإنجليزية</mat-label>
+              <input
+                readonly
+                matInput
+                formControlName="name"
+                type="text"
+                placeholder="hair dryer "
+              />
+            </mat-form-field>
+         
+      
+            <mat-form-field appearance="outline" class="w-full" >
+              <mat-label>بالعربية</mat-label>
+              <input
+                readonly
+                formControlName="arName"
+                matInput
+                type="text"
+                placeholder="مجفف شعر"
+              />
+            </mat-form-field>
+       
+       
+      </div>
+
+      <div>
+        <label>ماركة المنتج </label>
+      </div>
+      <div class="col-span-11">
+        <div class="flex flex-row gap-4">
+          <mat-form-field appearance="outline" class="w-full" >
+            <mat-label></mat-label>
+            <input readonly matInput formControlName="brand" type="text" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div>
+        <label>مصنع المنتج </label>
+      </div>
+      <div class="col-span-11">
+        <div class="flex flex-row gap-4">
+          <mat-form-field appearance="outline" class="w-full" >
+            <mat-label></mat-label>
+            <input
+              readonly
+              formControlName="manufacturer"
+              matInput
+              type="text"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div>
+        <label>رقم التصنيع </label>
+      </div>
+      <div class="col-span-11">
+        <div class="flex flex-row gap-4">
+          <mat-form-field appearance="outline" class="w-full" >
+            <mat-label></mat-label>
+            <input
+              readonly
+              formControlName="manufactureSerial"
+              matInput
+              type="text"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div *ngFor="let att of attributeList" class="grid grid-cols-7 gap-4">
+    <div>
+      <label>{{ att.attribute.arKey }}</label>
+    </div>
+    <div class="col-span-11">
+      <div class="flex flex-row gap-4">
+        <mat-form-field appearance="outline"
+          *ngIf="att.attribute.type == 'SINGLE_CHOICE'"
+          class="w-full"
+          
+        >
+          <mat-label></mat-label>
+          <input readonly matInput type="text" [(ngModel)]="att.value" />
+        </mat-form-field>
+        <mat-form-field appearance="outline"
+          *ngIf="att.attribute.type == 'MULTIPLE_CHOICES'"
+          class="w-full"
+          
+        >
+          <mat-label></mat-label>
+          <mat-select readonly [(ngModel)]="att.value">
+            <mat-option
+              *ngFor="let choice of att.attribute.attributeChoices"
+              [value]="choice.id"
+            >
+              {{ choice.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div
+  fxLayout="row"
+  fxLayout.lt-sm="column"
+  fxLayoutGap="16px"
+  fxLayoutGap.lt-sm="0"
+  *ngFor="let attributeChoice of productInfo.attributeChoices " 
+>
+  <mat-form-field appearance="outline" fxFlex="auto">
+    <mat-label> {{attributeChoice.attribute.key}} </mat-label>
+    <input matInput readonly [(value)]="attributeChoice.value" type="text">
+  </mat-form-field>
+
+</div>
+
+<div
+  fxLayout="row"
+  fxLayout.lt-sm="column"
+  fxLayoutGap="16px"
+  fxLayoutGap.lt-sm="0"
+  *ngFor="let attributeValue of productInfo.attributeValues " 
+>
+  <mat-form-field appearance="outline" fxFlex="auto">
+    <mat-label> {{attributeValue.attribute.key}} </mat-label>
+    <input matInput readonly [(value)]="attributeValue.value" type="text">
+  </mat-form-field>
+
+</div>
+
+  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+    <button
+      (click)="openRejectProductDialog()"
+      *ngIf="productInfo.status == 'PENDING'"
+      mat-raised-button
+      color="accent"
+    >
+      رفض المنتج
+    </button>
+    <button
+      (click)="updateStatus('APPROVED')"
+      *ngIf="productInfo.status == 'PENDING'"
+      color="primary"
+      mat-raised-button
+      type="button"
+    >
+      الموافقة على المنتج
+    </button>
+  </div>
+</div>

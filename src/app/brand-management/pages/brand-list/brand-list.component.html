@@ -1,0 +1,227 @@
+
+
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+  <ng-template let-brand="brand" matMenuContent>
+    <button (click)="updateDepartment(brand)"  mat-menu-item>
+      <mat-icon [icIcon]="icEdit"></mat-icon>
+      <span>تعديل</span>
+    </button>
+    <button (click)="removeBrand(brand.id)"  mat-menu-item>
+      <mat-icon [icIcon]="icDelete"></mat-icon>
+      <span>حذف</span>
+    </button>
+  </ng-template>
+</mat-menu>
+
+
+
+
+<div class="w-full h-full flex flex-col">
+  <div class="px-gutter pt-6 pb-20 bg-primary flex-none">
+    <div class="flex items-center" vexContainer>
+      <button
+        
+        @scaleIn
+        class="sm:hidden text-primary-contrast"
+        mat-icon-button
+        type="button"
+      >
+        <mat-icon [icIcon]="icMenu"></mat-icon>
+      </button>
+      <h2
+        class="headline text-primary-contrast m-0 flex items-center w-full max-w-xxxs mr-6"
+      >
+     
+        <span @fadeInRight class="ml-4 block"> قائمة الماركات</span>
+      </h2>
+
+      <div
+        class="hidden sm:flex items-center bg-card rounded-full overflow-hidden relative ltr:pl-5 rtl:pr-5 h-12 max-w-md w-full shadow-8 mx-auto"
+      >
+        <ic-icon
+          [icon]="icSearch"
+          class="text-secondary flex-none"
+          size="24px"
+        ></ic-icon>
+        <input
+          [formControl]="searchCtrl"
+          class="border-0 h-12 outline-none ltr:pl-4 rtl:pr-4 placeholder:text-secondary bg-card flex-auto"
+          placeholder="اسم العلامة التجارية"
+          type="text"
+        />
+    
+      </div>
+
+      <button
+      class="ml-4"
+      color="primary"
+      fxFlex="none"
+      mat-mini-fab
+      matTooltip="Add Department"
+      (click)="createDepartment()"
+      type="button"
+    >
+      <mat-icon [icIcon]="icAdd"></mat-icon>
+    </button>
+    </div>
+  </div>
+
+  <div class="-mt-14 pt-0 overflow-hidden flex" vexContainer>
+    <mat-drawer-container class="bg-transparent flex-auto flex">
+      <mat-drawer-content class="p-gutter pt-0 flex-auto flex items-start">
+        <div class="card h-full overflow-hidden flex-auto">
+          <table
+          @stagger
+          [dataSource]="dataSource"
+          class="w-full"
+          mat-table
+          matSort
+        >
+          <!--- Note that these columns can be defined in any order.
+                        The actual rendered columns are set as a property on the row definition" -->
+  
+          <!-- Contact Column -->
+          <ng-container matColumnDef="contact">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
+            <td *matCellDef="let row" mat-cell>
+              <div class="flex">
+                <a
+                  (click)="$event.stopPropagation()"
+                  class="w-8 h-8 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary-light"
+                  mat-icon-button
+                >
+                </a>
+  
+                <a
+                  (click)="$event.stopPropagation()"
+                  class="w-8 h-8 leading-none flex items-center justify-center ml-1 hover:bg-hover text-teal bg-teal-light"
+                  mat-icon-button
+                >
+                </a>
+  
+                <a
+                  (click)="$event.stopPropagation()"
+                  class="w-8 h-8 leading-none flex items-center justify-center ml-1 hover:bg-hover text-green bg-green-light"
+                  mat-icon-button
+                >
+                </a>
+              </div>
+            </td>
+          </ng-container>
+  
+          <!-- Image Column -->
+          <ng-container matColumnDef="image">
+           <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
+            <td *matCellDef="let row" class="w-12 min-w-12 pr-0" mat-cell>
+              <img
+                [src]="server + row['image']?.public_url"
+                class="h-12 w-12 align-middle"
+              />
+            </td>
+          </ng-container>
+  
+          <!-- Label Column -->
+          <ng-container matColumnDef="labels">
+            <th
+              *matHeaderCellDef
+              class="uppercase"
+              mat-header-cell
+              mat-sort-header
+            >
+              Labels
+            </th>
+            <td *matCellDef="let row" mat-cell>
+              <div
+                (click)="$event.stopPropagation()"
+                fxLayoutAlign="start center"
+                fxLayoutGap="4px"
+              >
+                <div
+                  *ngFor="let label of row.labels"
+                  [ngClass]="[label.textClass, label.bgClass]"
+                  class="rounded px-2 py-1 font-medium text-xs"
+                  fxFlex="none"
+                >
+                  {{ label.text }}
+                </div>
+                <div
+                  (click)="labelSelect.open()"
+                  class="text-secondary bg-base text-hint cursor-pointer hover:bg-hover"
+                  fxFlex="none"
+                  fxLayout="row"
+                  fxLayoutAlign="center center"
+                ></div>
+                <mat-select
+                  #labelSelect="matSelect"
+                  (selectionChange)="onLabelChange($event, row)"
+                  [value]="row.labels"
+                  class="invisible w-0 h-0 text-sm"
+                  fxFlex="0 1 0px"
+                  multiple
+                >
+                  <mat-option *ngFor="let label of labels" [value]="label">
+                    <div
+                      [ngClass]="label.previewClass"
+                      class="h-6 w-6 align-middle ltr:mr-2 rtl:ml-2 rounded inline-block"
+                    ></div>
+                    <span>{{ label.text }}</span>
+                  </mat-option>
+                </mat-select>
+              </div>
+            </td>
+          </ng-container>
+  
+          <!-- Text Column -->
+          <ng-container *ngFor="let column of columns">
+            <ng-container
+              *ngIf="column?.type === 'text'"
+              [matColumnDef]="column.property"
+            >
+              <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                {{ column.label }}
+              </th>
+              <td  *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+                <label *ngIf="column.property == 'createdAt'">
+                  {{ row[column.property] | date: 'dd/MM/yyyy' }}
+                </label>
+                <label *ngIf="column.property == 'name'">
+                  {{ row[column.property]}}
+                </label>
+       
+              </td>
+            
+            </ng-container>
+          </ng-container>
+  
+             <!-- Action Column -->
+             <ng-container matColumnDef="actions">
+              <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
+              <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                <button (click)="$event.stopPropagation()"
+                        [matMenuTriggerData]="{ brand: row }"
+                        [matMenuTriggerFor]="actionsMenu"
+                        mat-icon-button
+                        type="button">
+                  <mat-icon [icIcon]="icMoreHoriz"></mat-icon>
+                </button>
+              </td>
+            </ng-container>
+  
+          <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+          <tr
+            *matRowDef="let row; columns: visibleColumns"
+            @fadeInUp
+            class="hover:bg-hover trans-ease-out cursor-pointer"
+            mat-row
+          ></tr>
+        </table>
+        <mat-paginator
+        [pageSizeOptions]="pageSizeOptions"
+        [pageSize]="pageSize"
+        class="sticky left-0"
+      ></mat-paginator>
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
+</div>

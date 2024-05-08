@@ -1,0 +1,16 @@
+<h1>قائمة أذونات</h1>
+<table  style="max-height: 200px;overflow: auto">
+    <tr>
+        <th>اسم</th>
+        <th>أنشئت في</th>
+        <th>تم التحديث في</th>
+    </tr>
+    <tr *ngFor="let permission of data">
+        <td>{{permission.name}}</td>
+        <td>{{permission.createdAt | date}}</td>
+        <td>{{permission.updatedAt | date}}</td>
+    </tr>
+
+</table>
+<hr>
+<button  matDialogClose mat-button>اغلاق</button>

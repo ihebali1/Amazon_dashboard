@@ -1,0 +1,285 @@
+<div class="mt-6 flex flex-col md:flex-row md:items-start">
+  <div class="flex-auto">
+    <div class="card">
+      <div *ngIf="info" class="px-gutter py-4 border-b ml-10">
+        <label class="title m-0">
+          حالة البائع:
+          
+          <label class="font-bold"  *ngIf="info?.vendorState == 'UNVERIFIED'">غير مؤكد</label>
+          <label class="font-bold" *ngIf="info?.vendorState == 'VERIFIED'"> تم التحقق منه</label>
+          <label class="font-bold" *ngIf="info?.vendorState == 'SUSPENDED'"> في الإيقاف</label>
+          <label class="font-bold" *ngIf="info?.vendorState == 'DISABLED'"> ملغى</label>
+        </label>
+        <!--
+                    @TODO ADD CHANGE STATUS HERE
+                -->
+
+        <div></div>
+
+        <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+          <mat-form-field appearance="outline" >
+            <mat-label>تغيير حالة البائع</mat-label>
+            <mat-select [(value)]="selectedState">
+              <mat-option *ngIf="info?.vendorState != 'VERIFIED' "  value="VERIFIED">
+                تغيير حالة البائع إلى مؤكد
+              </mat-option>
+
+              <mat-option *ngIf="info?.vendorState != 'UNVERIFIED' " value="UNVERIFIED">
+                تغيير حالة البائع إلى غير مؤكد
+              </mat-option>
+
+              <mat-option *ngIf="info?.vendorState != 'SUSPENDED' " value="SUSPENDED">
+                تغيير حالة البائع إلى في الإيقاف
+              </mat-option>
+
+              <mat-option *ngIf="info?.vendorState != 'DISABLED' " value="DISABLED">
+                تغيير حالة البائع إلى ملغى
+              </mat-option>
+            </mat-select>
+     
+          </mat-form-field>
+
+          <button (click)="updateStatus()" class="mx-2" mat-raised-button color="primary">تغيير</button>
+        </div>
+
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+          <div @fadeInUp fxFlex="auto">
+            <div
+              class="px-6 py-4 border-b"
+              fxLayout="row"
+              fxLayoutAlign="start center"
+            >
+              <h2 class="title m-0">البائع ومعلوماته التجارية</h2>
+            </div>
+
+            <div class="px-6 py-4" fxLayout="column">
+              <div
+                fxLayout="row"
+                fxLayout.lt-sm="column"
+                fxLayoutGap="16px"
+                fxLayoutGap.lt-sm="0"
+              >
+                <mat-form-field appearance="outline" fxFlex="auto">
+                  <mat-label> الاسم الشخصي </mat-label>
+                  <input matInput readonly value="{{ info?.firstName }}" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="auto">
+                  <mat-label> اللقب </mat-label>
+                  <input matInput readonly value="{{ info?.lastName }}" />
+                </mat-form-field>
+              </div>
+
+              <div
+                fxLayout="row"
+                fxLayout.lt-sm="column"
+                fxLayoutGap="16px"
+                fxLayoutGap.lt-sm="0"
+              >
+                <mat-form-field appearance="outline" fxFlex="auto">
+                  <mat-label> البريد الإلكتروني </mat-label>
+                  <input matInput readonly value="{{ info?.email }}" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="auto">
+                  <mat-label> رقم الهاتف </mat-label>
+                  <input matInput readonly value="{{ info?.phone }}" />
+                </mat-form-field>
+              </div>
+              <hr />
+              <div
+                fxLayout="row"
+                fxLayout.lt-sm="column"
+                fxLayoutGap="16px"
+                fxLayoutGap.lt-sm="0"
+              >
+                <mat-form-field appearance="outline" fxFlex="auto">
+                  <mat-label> العنوان الأول </mat-label>
+                  <input
+                    matInput
+                    readonly
+                    value="{{ info?.businessAdress?.adressLine }}"
+                  />
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="auto">
+                  <mat-label> العنوان 2 </mat-label>
+                  <input
+                    matInput
+                    readonly
+                    value="{{ info?.businessAdress?.adressLine2 }}"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div
+                fxLayout="row"
+                fxLayout.lt-sm="column"
+                fxLayoutGap="16px"
+                fxLayoutGap.lt-sm="0"
+              >
+                <mat-form-field appearance="outline" fxFlex="auto">
+                  <mat-label> المدينة </mat-label>
+                  <input
+                    matInput
+                    readonly
+                    value="{{ info?.businessAdress?.town }}"
+                  />
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="auto">
+                  <mat-label> الولاية </mat-label>
+                  <input
+                    matInput
+                    readonly
+                    value="{{ info?.businessAdress?.region }}"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div
+                fxLayout="row"
+                fxLayout.lt-sm="column"
+                fxLayoutGap="16px"
+                fxLayoutGap.lt-sm="0"
+              >
+                <mat-form-field appearance="outline" fxFlex="auto">
+                  <mat-label> الرمز البريدي </mat-label>
+                  <input
+                    matInput
+                    readonly
+                    value="{{ info?.businessAdress?.postalCode }}"
+                  />
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="auto">
+                  <mat-label> تاريخ التسجيل </mat-label>
+                  <input
+                    matInput
+                    readonly
+                    value="  {{ info?.createdAt | date: 'dd/MM/yyyy' }}"
+                  />
+                </mat-form-field>
+              </div>
+              <hr />
+              <div
+                fxLayout="row"
+                fxLayout.lt-sm="column"
+                fxLayoutGap="16px"
+                fxLayoutGap.lt-sm="0"
+              >
+                <mat-form-field appearance="outline" fxFlex="auto">
+                  <mat-label> الاسم التجاري </mat-label>
+                  <input
+                    matInput
+                    readonly
+                    value="{{ info?.businessInfo?.businessName }}"
+                  />
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="auto">
+                  <mat-label> رقم السجل التجاري </mat-label>
+                  <input
+                    matInput
+                    readonly
+                    value="{{ info?.businessInfo?.numberCompany }}"
+                  />
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="auto">
+                  <mat-label> اسم المتجر </mat-label>
+                  <input
+                    matInput
+                    readonly
+                    value="{{ info?.businessInfo?.storeName }}"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-4">
+          <div class="px-gutter py-4 border-b">
+            <h2 class="title m-0">المرفقات والمستندات</h2>
+          </div>
+
+          <div
+            class="px-gutter py-4"
+            gdColumns="1fr 1fr"
+            gdColumns.xs="1fr"
+            gdGap="16px"
+          >
+            <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+              <div
+                @scaleIn
+                class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center"
+              ></div>
+
+              <div *ngIf="info.identityFront != null" @fadeInRight>
+                <p class="m-0 body-1">
+                  <img
+                    @scaleIn
+                    class="rounded w-full"
+                    gdGridAlign="center"
+                    [src]="server + info?.identityFront?.public_url"
+                  />
+                </p>
+                <p class="m-0 caption text-hint">CIN Front-Side</p>
+              </div>
+            </div>
+
+            <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+              <div
+                @scaleIn
+                class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center"
+              ></div>
+
+              <div *ngIf="info.identityBack != null" @fadeInRight>
+                <p class="m-0 body-1">
+                  <img
+                    *ngFor="let i of [1]"
+                    @scaleIn
+                    class="rounded w-full"
+                    gdGridAlign="center"
+                    [src]="server + info?.identityBack?.public_url"
+                  />
+                </p>
+                <p class="m-0 caption text-hint">CIN Back-Side</p>
+              </div>
+            </div>
+            <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+              <div
+                @scaleIn
+                class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center"
+              ></div>
+
+              <div *ngIf="info.statementDocument != null" @fadeInRight>
+                <p class="m-0 body-1">
+                  <img
+                    *ngFor="let i of [1]"
+                    @scaleIn
+                    class="rounded w-full"
+                    gdGridAlign="center"
+                    [src]="server + info?.statementDocument?.public_url"
+                  />
+                </p>
+                <p class="m-0 caption text-hint">Statement Document</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--
+<div class="card max-w-unset md:max-w-xs w-full flex-none md:ltr:ml-6 md:rtl:mr-6 mt-6 md:mt-0">
+    <div class="px-6 py-4 border-b">
+      <h2 class="title m-0">آخر التعليقات على المنتجات</h2>
+    </div>
+
+    <div @stagger class="px-6 py-4" fxLayout="column" fxLayoutGap="16px">
+      <div *ngFor="let friend of suggestions; trackBy: trackByName" fxLayout="row" fxLayoutAlign="start center">
+        <img @scaleIn [src]="friend.imageSrc" alt="Profile Picture" class="avatar ltr:mr-3 rtl:ml-3" fxFlex="none"/>
+        <div @fadeInRight fxFlex="auto">
+          <h4 class="body-2 m-0 leading-snug">{{ friend.name }}</h4>
+          <h5 class="text-secondary m-0 caption leading-none">{{ friend.friends }} mutual friends</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+-->
+    </div>
+  </div>
+</div>

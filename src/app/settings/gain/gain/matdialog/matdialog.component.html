@@ -1,0 +1,17 @@
+
+<h1 class="text-center " mat-dialog-title>Hi </h1>
+<div class="text-center" mat-dialog-content>
+  <p>What's your New percentage?</p>
+    <mat-form-field appearance="outline" >
+        
+        <input  [formControl]="percentage" matInput class="border-4">
+      </mat-form-field>
+    <mat-error>
+      Please enter a valid number
+    </mat-error>
+
+</div>
+<div class="text-center" mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button  cdkFocusInitial (click)="saveNumber()">Save</button>
+</div>

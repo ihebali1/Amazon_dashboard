@@ -1,0 +1,23 @@
+<div class="dropdown">
+  <div class="dropdown-header" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <div class="dropdown-heading-icon" fxLayout="row" fxLayoutAlign="center center">
+        <mat-icon [icIcon]="icPerson"></mat-icon>
+      </div>
+      <div class="dropdown-heading">
+        {{fullName}}
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+  <div class="dropdown-footer" fxLayout="row" fxLayoutAlign="space-between center">
+  
+    <a (click)="logout()"  color="primary" mat-button>تسجيل خروج</a>
+  </div>
+</div>
+
+

@@ -1,0 +1,85 @@
+<div class="p-2">
+
+    <div class="card" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+        <div @fadeInUp fxFlex="auto">
+          <div
+            class="px-6 py-4 border-b"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+          >
+            <h2 class="title mx-4">
+                إضافة مشرف جديد
+            </h2>
+          </div>
+          <form (ngSubmit)="save()" [formGroup]="addAdmin">
+          <div class="px-6 py-4" fxLayout="column">
+            <div
+              fxLayout="row"
+              fxLayout.lt-sm="column"
+              fxLayoutGap="16px"
+              fxLayoutGap.lt-sm="0"
+            >
+              <mat-form-field appearance="outline" fxFlex="auto">
+                <mat-label>الاسم</mat-label>
+                <input placeholder="أدخل الاسم" type="text" cdkFocusInitial formControlName="firstName" matInput required>
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="auto">
+                <mat-label>اللقب</mat-label>
+                <input placeholder="أدخل اللقب" type="text" cdkFocusInitial formControlName="lastName" matInput required>
+              </mat-form-field>
+            </div>
+
+            <div
+              fxLayout="row"
+              fxLayout.lt-sm="column"
+              fxLayoutGap="16px"
+              fxLayoutGap.lt-sm="0"
+            >
+              <mat-form-field appearance="outline" fxFlex="auto">
+                <mat-label>البريد الإلكتروني</mat-label>
+                <input type="email" placeholder="أدخل البريد الإلكتروني " cdkFocusInitial formControlName="email"
+                       matInput required>
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="auto">
+                <mat-label>الهاتف</mat-label>
+                <input type="phone" placeholder="أدخل الهاتف " cdkFocusInitial formControlName="phone" matInput required>
+              </mat-form-field>
+            </div>
+            <hr />
+        
+
+            <div
+              fxLayout="row"
+              fxLayout.lt-sm="column"
+              fxLayoutGap="16px"
+              fxLayoutGap.lt-sm="0"
+            >
+             
+              <mat-form-field appearance="outline" fxFlex="auto">
+                <mat-label>أذونات</mat-label>
+                <mat-select (selectionChange)="selectMPack($event)" placeholder="أدخل الإذن " cdkFocusInitial formControlName="managementPack" required>
+                    <mat-option *ngFor="let option of mPacks" value="{{option.id}}">{{option.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+           
+                <button
+                 
+                  
+                  color="primary"
+                  mat-raised-button
+                  type="submit"
+                >
+                إضافة مشرف
+                </button>
+              </div>
+          </div>
+
+        
+          </form>
+        </div>
+      </div>
+</div>
+
+

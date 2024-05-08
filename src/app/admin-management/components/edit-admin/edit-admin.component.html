@@ -1,0 +1,40 @@
+
+<form (ngSubmit)="update()" [formGroup]="editAdmin">
+    <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+        <h1>
+            تحيين بيانات المشرف
+        </h1>
+    </div>
+
+    <mat-divider class="-mx-6 text-border"></mat-divider>
+
+    <mat-dialog-content fxLayout="column">
+
+
+            <mat-form-field appearance="outline" class="mt-6 flex-auto">
+                <mat-label>الاسم</mat-label>
+                <input placeholder="أدخل الاسم" cdkFocusInitial formControlName="firstName" matInput>
+            </mat-form-field>
+            <br/>
+            <mat-form-field appearance="outline" class="mt-6 flex-auto">
+                <mat-label>اللقب</mat-label>
+                <input placeholder="أدخل اللقب" cdkFocusInitial formControlName="lastName" matInput>
+            </mat-form-field>
+            <br/>
+            <mat-form-field appearance="outline" class="mt-6 flex-auto">
+                <mat-label>البريد الإلكتروني </mat-label>
+                <input placeholder="أدخل البريد الإلكتروني " cdkFocusInitial formControlName="email" matInput>
+            </mat-form-field>
+            <br/>
+            <mat-form-field appearance="outline" class="mt-6 flex-auto">
+                <mat-label>الهاتف</mat-label>
+                <input placeholder="أدخل الهاتف " cdkFocusInitial formControlName="phone" matInput>
+            </mat-form-field>
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close type="button">إلغاء</button>
+        <button color="primary" mat-button type="submit">تحديث</button>
+    </mat-dialog-actions>
+</form>
+

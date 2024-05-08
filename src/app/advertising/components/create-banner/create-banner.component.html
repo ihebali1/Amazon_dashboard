@@ -1,0 +1,114 @@
+<div class="p-2">
+
+    <div class="card" fxLayout="row" class="w-full" fxLayoutGap="20px">
+   
+            <div class="px-6 py-4 border-b" fxLayout="row" fxLayoutAlign="start center">
+                <h2 class="title mx-4">
+                    إضافة لافتة جديدة
+                </h2>
+            </div>
+            <form (ngSubmit)="save()" [formGroup]="bannerForm">
+            
+                    <div fxLayout="row" fxLayoutGap="16px" fxLayoutGap.lt-sm="0">
+                        <mat-form-field appearance="outline" class="w-full"  >
+                            <mat-label>
+                                اختر نوع ارتباط البانر
+                            </mat-label>
+                            <mat-select formControlName="linkType" (selectionChange)="selectBannerLinkType($event)">
+                                <mat-option value="PRODUCT">منتج</mat-option>
+                                <mat-option value="DEPARTMENT">قسم</mat-option>
+                                <mat-option value="VENDOR">بائع</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="16px" fxLayoutGap.lt-sm="0">
+                        <mat-form-field appearance="outline" class="w-full"  >
+                            <mat-label>
+                                اختر نوع البانر
+                            </mat-label>
+                            <mat-select formControlName="type" (selectionChange)="selectBannerType($event)">
+                                <mat-option value="HOME_HEADER"> لافتات الصفحة الرئيسية</mat-option>
+                                <mat-option value="DEPARTMENT_HEADER"> لافتات صفحة القسم</mat-option>
+                                <mat-option value="DEPARTMENT_CARD"> لافتات بطاقات الأقسام</mat-option>
+                                <mat-option value="AD"> لافتات إعلانية</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div *ngIf="selectedBannerLinkType == 'PRODUCT' " fxLayout="row" fxLayout.lt-sm="column"
+                        fxLayoutGap="16px" fxLayoutGap.lt-sm="0">
+                        <mat-form-field appearance="outline" class="w-full"  >
+                            <mat-label>
+                                اختر المنتج
+                            </mat-label>
+                            <mat-select (selectionChange)="selectProduct($event)" >
+                                <mat-option  [value]="product" *ngFor="let product of products.products">
+                                    {{product?.name}}
+                                </mat-option>
+
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div *ngIf="selectedBannerLinkType == 'DEPARTMENT' " fxLayout="row" fxLayout.lt-sm="column"
+                        fxLayoutGap="16px" fxLayoutGap.lt-sm="0">
+                        <mat-form-field appearance="outline" class="w-full"  >
+                            <mat-label>
+                                اختر القسم
+                            </mat-label>
+                            <mat-select formControlName="department">
+                                <mat-option *ngFor="let department of departments" value="{{department.id}}"> 
+                                    {{department?.arName}}
+                                </mat-option>
+
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div *ngIf="selectedBannerLinkType == 'VENDOR' " fxLayout="row" fxLayout.lt-sm="column"
+                        fxLayoutGap="16px" fxLayoutGap.lt-sm="0">
+                        <mat-form-field appearance="outline" class="w-full"  >
+                            <mat-label>
+                                اختر البائع
+                            </mat-label>
+                            <mat-select formControlName="vendor">
+                                <mat-option *ngFor="let vendor of vendors" value="{{vendor.id}}"> 
+                                    {{vendor.businessInfo.storeName}}
+                                </mat-option>
+
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+                    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="16px" fxLayoutGap.lt-sm="0">
+                        <img *ngIf="image != null" (click)="fileInput.click()" class="rounded" gdGridAlign="center"
+                            [src]="image" />
+
+                        <img *ngIf="image == null" (click)="fileInput.click()" class="rounded" gdGridAlign="center"
+                            src="assets/img/placeholder.png" />
+
+
+                        <input hidden="true" type="file" multiple accept="image/png, image/jpeg, image/jpg" max="3"
+                            maxlength="3" class="d-none" (change)="onFileInput($event?.target?.files)" #fileInput />
+
+                    </div>
+
+
+                    <div fxLayout="row" class="mt-4" fxLayoutAlign="end center" fxLayoutGap="8px">
+
+                        <button color="primary" mat-raised-button type="submit">
+                            إضافة
+                        </button>
+                    </div>
+            
+
+
+            </form>
+
+    </div>
+</div>

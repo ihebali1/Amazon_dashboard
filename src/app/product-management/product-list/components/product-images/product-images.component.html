@@ -1,0 +1,30 @@
+<div class="card mt-6">
+
+    <div class="px-gutter py-4 border-b">
+        <h2 class="title m-0">
+            صورة المنتج الأساسية
+        </h2>
+
+    </div>
+
+    <div class="grid grid-cols-4 gap-4">
+        <div>
+            <img *ngIf="productInfo.primaryImage != null && image == null"  [src]="server+ productInfo?.primaryImage.public_url " class="rounded w-400 h-400" gdGridAlign="center" />
+
+        </div>
+    </div>
+
+    <div class="px-gutter py-4 border-b">
+        <h2 class="title m-0">صور المنتج</h2>
+    </div>
+
+    <div class="grid grid-cols-4 gap-4 py-4">
+        <div *ngFor="let image of productInfo.images">
+            <img  style="width: 400px; height: 200px;" [src]="server+ image?.public_url" />
+        
+        </div>
+       
+    </div>
+
+   
+</div>

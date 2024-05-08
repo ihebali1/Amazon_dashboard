@@ -1,0 +1,226 @@
+
+<div class="p-6 shadow-sm rounded-sm bg-primary">
+  <div
+  fxLayout="row"
+
+  fxLayoutAlign="start center"
+  mat-dialog-title
+  class="card w-full p-3 mt-2 sticky fixed my-2 "
+>
+  <h1 class="text-2xl font-medium">تحيين الإعدادات العامة</h1>
+</div>
+  <div class="text-gray-700">
+    <div class="grid md:grid-cols-2 text-sm gap-4">
+      <div class="stylecard col-11">
+        <mat-card class="example-card">
+          <mat-card-title-group>
+            <mat-card-title class="title">
+              نسبة الضريبة على القيمة المضافة
+            </mat-card-title>
+            <mat-card-subtitle>
+              <hr />
+            </mat-card-subtitle>
+          </mat-card-title-group>
+          <mat-card-content>
+            <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+              <form (ngSubmit)="save('tva')" [formGroup]="applySettingTVA">
+                <div class="row">
+                  <div class="col-6">
+                    <mat-form-field appearance="outline" class="mt-6 flex-auto w-full">
+                      <mat-label>معاملة ضريبة القيمة المضافة</mat-label>
+                      <input
+                        placeholder="الضريبة المضافة على المعاملات"
+                        type="text"
+                        cdkFocusInitial
+                        formControlName="tvaTransaction"
+                        matInput
+                        required
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-6">
+                    <mat-form-field appearance="outline" class="mt-6 flex-auto w-full">
+                      <mat-label>نقل ضريبة القيمة المضافة</mat-label>
+                      <input
+                        placeholder="الضريبة المضافة على النقل"
+                        type="text"
+                        cdkFocusInitial
+                        formControlName="tvaTransport"
+                        matInput
+                        required
+                        class="form-control"
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div
+                  fxLayout="row"
+                  fxLayoutAlign="start center"
+                  fxLayoutGap="8px"
+                >
+                  <button type="submit" color="primary" mat-raised-button>
+                    حفظ
+                  </button>
+                </div>
+              </form>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      
+      <div class="stylecard col-11">
+        <mat-card class="example-card">
+          <mat-card-title-group>
+            <mat-card-title class="title"> تكلفة الشحن </mat-card-title>
+            <mat-card-subtitle> <hr /></mat-card-subtitle>
+          </mat-card-title-group>
+          <mat-card-content>
+            <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+              <form
+                (ngSubmit)="save('shipping')"
+                [formGroup]="applySettingShipping"
+              >
+                <div class="row">
+                  <div class="col-6">
+                    <mat-form-field appearance="outline" class="mt-6 flex-auto w-full">
+                      <mat-label> شحن نفس المنطقة</mat-label>
+                      <input
+                        placeholder="أدخل شحن نفس المنطقة"
+                        type="text"
+                        cdkFocusInitial
+                        formControlName="shippingS"
+                        matInput
+                        required
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-6">
+                    <mat-form-field appearance="outline" class="mt-6 flex-auto w-full">
+                      <mat-label>شحن منطقة مختلفة</mat-label>
+                      <input
+                        placeholder="أدخل شحن منطقة مختلفة"
+                        type="text"
+                        cdkFocusInitial
+                        formControlName="shippingD"
+                        matInput
+                        required
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div
+                  fxLayout="row"
+                  fxLayoutAlign="start center"
+                  fxLayoutGap="8px"
+                >
+                  <button type="submit" color="primary" mat-raised-button>
+                    حفظ
+                  </button>
+                </div>
+              </form>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="stylecard col-11">
+        <mat-card class="example-card">
+          <mat-card-title-group>
+            <mat-card-title class="title">
+              قيمة الاشتراك بالمنصة ( بالنسبة للبائعين )
+            </mat-card-title>
+            <mat-card-subtitle> <hr /></mat-card-subtitle>
+          </mat-card-title-group>
+          <mat-card-content>
+            <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+              <form
+                (ngSubmit)="save('subscription')"
+                [formGroup]="applySettingSubscription"
+              >
+                <div class="row">
+                  <div class="col-6">
+                    <mat-form-field appearance="outline" class="mt-6 flex-auto w-full">
+                      <mat-label>اشتراك فردي</mat-label>
+                      <input
+                        placeholder="أدخل اشتراك فردي"
+                        type="text"
+                        cdkFocusInitial
+                        formControlName="subscriptionI"
+                        matInput
+                        required
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-6">
+                    <mat-form-field appearance="outline" class="mt-6 flex-auto w-full">
+                      <mat-label>اشتراك احترافي</mat-label>
+                      <input
+                        placeholder="أدخل اشتراك احترافي"
+                        type="text"
+                        cdkFocusInitial
+                        formControlName="subscriptionP"
+                        matInput
+                        required
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div
+                  fxLayout="row"
+                  fxLayoutAlign="start center"
+                  fxLayoutGap="8px"
+                >
+                  <button type="submit" color="primary" mat-raised-button>
+                    حفظ
+                  </button>
+                </div>
+              </form>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="stylecard col-11">
+        <mat-card class="example-card">
+          <mat-card-title-group>
+            <mat-card-title class="title"> نسبة مرابيح المنصة </mat-card-title>
+            <mat-card-subtitle> <hr /></mat-card-subtitle>
+          </mat-card-title-group>
+          <mat-card-content>
+            <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+              <form (ngSubmit)="save('gain')" [formGroup]="applySettingGain">
+                <div class="row">
+                  <div class="col-6">
+                    <mat-form-field appearance="outline" class="mt-6 flex-auto w-full">
+                      <mat-label>كسب</mat-label>
+                      <input
+                        placeholder="أدخل كسب"
+                        type="text"
+                        cdkFocusInitial
+                        formControlName="gain"
+                        matInput
+                        required
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-6"></div>
+                </div>
+
+                <div
+                  fxLayout="row"
+                  fxLayoutAlign="start center"
+                  fxLayoutGap="8px"
+                >
+                  <button type="submit" color="primary" mat-raised-button>
+                    حفظ
+                  </button>
+                </div>
+              </form>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="mt-6 flex flex-col md:flex-row md:items-start">
+  <div class="flex-auto">
+    <div class="card">
+      <div
+        *ngIf="customerData"
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="20px"
+      >
+        <div @fadeInUp fxFlex="auto">
+          <div
+            class="px-6 py-4 border-b"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+          >
+            <h2 class="title mx-4">
+              معلومات العميل (<label *ngIf="customerData.isActive == true"
+                >الحساب نشط</label
+              >
+              <label *ngIf="customerData.isActive == false">حساب غير نشط</label>
+              )
+            </h2>
+
+            <button
+              (click)="updateStatus(true)"
+              *ngIf="customerData.isActive == false"
+              mat-raised-button
+            >
+              تفعيل
+            </button>
+            <button
+              (click)="updateStatus(false)"
+              *ngIf="customerData.isActive == true"
+              mat-raised-button
+              color="accent"
+            >
+              إيقاف
+            </button>
+          </div>
+
+          <div class="px-6 py-4" fxLayout="column">
+            <div
+              fxLayout="row"
+              fxLayout.lt-sm="column"
+              fxLayoutGap="16px"
+              fxLayoutGap.lt-sm="0"
+            >
+              <mat-form-field appearance="outline" fxFlex="auto">
+                <mat-label> الاسم الشخصي </mat-label>
+                <input
+                  matInput
+                  readonly
+                  value="{{ customerData?.firstName }}"
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="auto">
+                <mat-label> اللقب </mat-label>
+                <input matInput readonly value="{{ customerData?.lastName }}" />
+              </mat-form-field>
+            </div>
+
+            <div
+              fxLayout="row"
+              fxLayout.lt-sm="column"
+              fxLayoutGap="16px"
+              fxLayoutGap.lt-sm="0"
+            >
+              <mat-form-field appearance="outline" fxFlex="auto">
+                <mat-label> البريد الإلكتروني </mat-label>
+                <input matInput readonly value="{{ customerData?.email }}" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="auto">
+                <mat-label> رقم الهاتف </mat-label>
+                <input matInput readonly value="{{ customerData?.phone }}" />
+              </mat-form-field>
+            </div>
+            <hr />
+
+            <div
+              fxLayout="row"
+              fxLayout.lt-sm="column"
+              fxLayoutGap="16px"
+              fxLayoutGap.lt-sm="0"
+            >
+              <mat-form-field appearance="outline" fxFlex="auto">
+                <mat-label> تاريخ التسجيل </mat-label>
+                <input
+                  matInput
+                  readonly
+                  value="  {{ customerData?.createdAt | date: 'dd/MM/yyyy' }}"
+                />
+              </mat-form-field>
+            </div>
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

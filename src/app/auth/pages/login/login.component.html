@@ -1,0 +1,62 @@
+<div class="w-full h-full bg-pattern" fxLayout="column" fxLayoutAlign="center center">
+    <div @fadeInUp class="card overflow-hidden w-3/4 ">
+      <div class="p-6 pb-0" fxLayout="column" fxLayoutAlign="center center">
+        <div class="fill-current text-center">
+          <img class="w-16" src="assets/img/demo/logo.svg">
+        </div>
+      </div>
+  
+      <div class="text-center mt-4">
+        <h2 class="title m-0">
+          <strong>
+            تسجيل الدخول
+          </strong>
+          
+        </h2>
+      
+      </div>
+  
+      <div [formGroup]="form" class="p-6" fxLayout="column" fxLayoutGap="16px">
+        <div fxFlex="auto" fxLayout="column">
+          <mat-form-field appearance="outline" fxFlex="grow">
+            <mat-label>
+                البريد الإلكتروني
+            </mat-label>
+            <input formControlName="email" matInput type="email" required>
+            <mat-error *ngIf="form.get('email').hasError('required')">
+                نحتاج إلى عنوان بريد إلكتروني لتسجيل دخولك
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="grow">
+            <mat-label>
+                كلمة المرور
+            </mat-label>
+            <input [type]="inputType" formControlName="password" matInput required>
+            <button (click)="toggleVisibility()" mat-icon-button matSuffix matTooltip="Toggle Visibility" type="button">
+              <mat-icon *ngIf="visible" [icIcon]="icVisibility"></mat-icon>
+              <mat-icon *ngIf="!visible" [icIcon]="icVisibilityOff"></mat-icon>
+            </button>
+            <mat-hint>
+                اضغط على العين لتبديل الرؤية
+            </mat-hint>
+            <mat-error *ngIf="form.get('password').hasError('required')">
+                نحتاج إلى كلمة مرور لتسجيل الدخول
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+      
+          <a [routerLink]="['/forgot-password']" class="caption">
+            هل نسيت كلمة السر؟
+          </a>
+        </div>
+  
+        <button (click)="login()" color="primary" mat-raised-button type="button">
+            تسجيل الدخول
+        </button>
+  
+      </div>
+    </div>
+  </div>
+  

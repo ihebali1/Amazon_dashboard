@@ -1,0 +1,57 @@
+
+    <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+      
+      <h2 
+          class="headline m-0"
+          fxFlex="auto">إضافة فئة فرعية</h2>
+  
+      
+  
+      <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+        <mat-icon [icIcon]="icClose"></mat-icon>
+      </button>
+    </div>
+  
+    <mat-divider class="-mx-6 text-border"></mat-divider>
+  
+    <mat-dialog-content fxLayout="column">
+      <form (ngSubmit)="save()">
+      <div class="flex flex-col sm:flex-row">
+        <mat-form-field appearance="outline" class="mt-6 flex-auto" >
+          <mat-label>اختر فئة فرعية</mat-label>
+          <mat-select [(value)]="selectedChildCategory">
+            <mat-option *ngFor="let childCategory of childCategories" [value]="childCategory.id"> {{ childCategory.name }} </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+      </div>
+      <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close type="button">إلغاء</button>
+        <button *ngIf="isCreateMode()" color="primary" mat-button type="submit">إضافة</button>
+      </mat-dialog-actions>
+    </form>
+    <div class="flex flex-col sm:flex-row">
+      <mat-form-field appearance="outline" class="mt-6 mx-1 flex-auto" >
+        <mat-label>إدخال فئة فرعية جديدة</mat-label>
+        <input matInput placeholder="إدخال فئة فرعية جديدة" [formControl]="name">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="mt-6 mx-1  flex-auto" >
+        <mat-label>إدخال فئة فرعية جديدة</mat-label>
+        <input matInput placeholder="إدخال فئة فرعية جديدة" [formControl]="arName">
+      </mat-form-field>
+  
+    </div>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close type="button">إلغاء</button>
+      <button color="primary" mat-button type="button" (click)="createNewChildCategory()">إضافة</button>
+    </mat-dialog-actions>
+    </mat-dialog-content>
+   
+
+
+
+
+
+  
+  
+  

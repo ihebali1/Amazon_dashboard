@@ -1,0 +1,48 @@
+<form (ngSubmit)="save()" [formGroup]="form">
+    <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+      
+      <h2 *ngIf="form.get('key').value && isUpdateMode()"
+          class="headline m-0"
+          fxFlex="auto">تحديث الخاصية: {{ form.get('key').value}}</h2>
+      <h2 *ngIf="!form.get('key').value || isCreateMode()"
+          class="headline m-0"
+          fxFlex="auto">أضافة خاصية جديدة </h2>
+  
+      
+  
+      <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+        <mat-icon [icIcon]="icClose"></mat-icon>
+      </button>
+    </div>
+  
+    <mat-divider class="-mx-6 text-border"></mat-divider>
+  
+    <mat-dialog-content fxLayout="column">
+      <div class="flex flex-col sm:flex-row">
+        <mat-form-field appearance="outline" class="mt-6 mx-3 flex-auto">
+          <mat-label>الاسم</mat-label>
+          <input placeholder="أدخل الاسم" cdkFocusInitial formControlName="key" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mt-6 mx-3 flex-auto">
+          <mat-label>الاسم بالعربي</mat-label>
+          <input placeholder="أدخل الاسم" cdkFocusInitial formControlName="arKey" matInput>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mt-6 flex-auto" >
+            <mat-label>اختر نوع السمة</mat-label>
+            <mat-select [(value)]="selectedType">
+              <mat-option  value="SINGLE_CHOICE"> خيار واحد </mat-option>
+              <mat-option  value="MULTIPLE_CHOICES"> خيارات متعددة </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close type="button">إلغاء</button>
+      <button *ngIf="isCreateMode()" color="primary" mat-button type="submit">إضافة</button>
+      <button *ngIf="isUpdateMode()" color="primary" mat-button type="submit">تحديث</button>
+    </mat-dialog-actions>
+  </form>
+  
+  
+  

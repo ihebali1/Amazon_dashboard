@@ -1,0 +1,89 @@
+<div class="p-10">
+
+    <div class="card">
+
+        <div *ngFor="let v of productInfo.variations;let i =index;" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+            <div @fadeInUp fxFlex="auto">
+              <div
+                class="px-6 py-4 border-b"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+              >
+              <h2> شكل المنتج رقم {{i + 1}} </h2>
+              </div>
+  
+              <div class="px-6 py-4" fxLayout="column">
+                <div
+                  fxLayout="row"
+                  fxLayout.lt-sm="column"
+                  fxLayoutGap="16px"
+                  fxLayoutGap.lt-sm="0"
+                >
+                  <mat-form-field appearance="outline" fxFlex="auto">
+                    <mat-label> معرف المنتج </mat-label>
+                    <input matInput readonly [(ngModel)]="v.productId" type="text">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="auto">
+                    <mat-label> 	نوع المنتج </mat-label>
+                  
+
+                    <input matInput readonly [(ngModel)]="v.productIdType" type="text">
+                  </mat-form-field>
+                </div>
+  
+                <div
+                  fxLayout="row"
+                  fxLayout.lt-sm="column"
+                  fxLayoutGap="16px"
+                  fxLayoutGap.lt-sm="0"
+                >
+                  <mat-form-field appearance="outline" fxFlex="auto">
+                    <mat-label> السعر </mat-label>
+                    <input matInput readonly [(ngModel)]="v.price" type="text">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="auto">
+                    <mat-label> الكمية </mat-label>
+                    <input matInput readonly [(ngModel)]="v.quantity" type="text">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="auto">
+                    <mat-label> الحالة</mat-label>
+                    <input matInput readonly [(ngModel)]="v.condition" type="text">
+                  </mat-form-field>
+                </div>
+
+                <div
+                  fxLayout="row"
+                  fxLayout.lt-sm="column"
+                  fxLayoutGap="16px"
+                  fxLayoutGap.lt-sm="0"
+                  *ngFor="let variationAttributeChoice of v.variationAttributeChoices" 
+                >
+                  <mat-form-field appearance="outline" fxFlex="auto">
+                    <mat-label> {{variationAttributeChoice.attribute.key}} </mat-label>
+                    <input matInput readonly [(value)]="variationAttributeChoice.value" type="text">
+                  </mat-form-field>
+                
+                </div>
+
+                <div
+                  fxLayout="row"
+                  fxLayout.lt-sm="column"
+                  fxLayoutGap="16px"
+                  fxLayoutGap.lt-sm="0"
+                  *ngFor="let variationAttributeValue of v.variationAttributeValues" 
+            
+                >
+                <mat-form-field appearance="outline" fxFlex="auto">
+                    <mat-label> {{variationAttributeValue.attribute.key}} </mat-label>
+                    <input matInput readonly [(value)]="variationAttributeValue.value" type="text">
+                  </mat-form-field>
+                
+                </div>
+           
+              </div>
+            </div>
+          </div>
+    </div>
+
+ 
+</div>

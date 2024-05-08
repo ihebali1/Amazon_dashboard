@@ -1,0 +1,62 @@
+<div class="card mt-6">
+    <div class="px-gutter py-4 border-b">
+        <h2 class="title m-0">
+            صورة رخصة السياقة
+        </h2>
+    </div>
+
+
+    <div class="grid grid-cols-4 gap-4">
+        <div>
+            <img *ngIf="image != null" (click)="fileInput.click()" id="singleImg" class="rounded w-400 h-400" gdGridAlign="center" [src]="image" />
+
+
+            <img *ngIf="image == null && !desactivateAddImages" (click)="fileInput.click()" class="rounded w-full" gdGridAlign="center" src="assets/img/placeholder.png" />
+
+            <input hidden="true" type="file" multiple accept="image/png, image/jpeg, image/jpg" max="3" maxlength="3" class="d-none" (change)="onFileInput($event?.target?.files)" #fileInput />
+        </div>
+    </div>
+    <div class="px-gutter py-4 border-b">
+        <h2 class="title m-0">صور البطاقات الرمادية </h2>
+    </div>
+    <div class="grid grid-cols-4 gap-4">
+        <div>
+
+
+            <img *ngIf="images[0] != null" (click)="one.click()" id="singleImg1" class="rounded w-400 h-400" gdGridAlign="center" [src]="images[0]" />
+
+
+            <img *ngIf="images[0] == null && !desactivateAddImages" (click)="one.click()" class="rounded w-full" gdGridAlign="center" src="assets/img/placeholder.png" />
+            <input hidden="true" type="file" multiple accept="image/png, image/jpeg, image/jpg" max="3" maxlength="3" class="d-none" (change)="onFileInputAdd($event?.target?.files,0)" #one />
+        </div>
+
+        <div *ngIf="images[0] != null">
+            <img *ngIf="images[1] != null" (click)="two.click()" id="singleImg2" class="rounded w-400 h-400" gdGridAlign="center" [src]="images[1]" />
+
+
+            <img *ngIf="images[1] == null && !desactivateAddImages" (click)="two.click()" class="rounded w-full" gdGridAlign="center" src="assets/img/placeholder.png" />
+            <input hidden="true" type="file" multiple accept="image/png, image/jpeg, image/jpg" max="3" maxlength="3" class="d-none" (change)="onFileInputAdd($event?.target?.files,1)" #two />
+        </div>
+
+        <div *ngIf="images[1] != null">
+            <img *ngIf="images[2] != null" (click)="three.click()" id="singleImg3" class="rounded w-400 h-400" gdGridAlign="center" [src]="images[2]" />
+
+
+            <img *ngIf="images[2] == null && !desactivateAddImages" (click)="three.click()" class="rounded w-full" gdGridAlign="center" src="assets/img/placeholder.png" />
+            <input hidden="true" type="file" multiple accept="image/png, image/jpeg, image/jpg" max="3" maxlength="3" class="d-none" (change)="onFileInputAdd($event?.target?.files,2)" #three />
+        </div>
+
+        <div *ngIf="images[2] != null">
+            <img *ngIf="images[3] != null" (click)="four.click()" id="singleImg4" class="rounded w-400 h-400" gdGridAlign="center" [src]="images[3]" />
+
+
+            <img *ngIf="images[3] == null && !desactivateAddImages" (click)="four.click()" class="rounded w-full" gdGridAlign="center" src="assets/img/placeholder.png" />
+            <input hidden="true" type="file" multiple accept="image/png, image/jpeg, image/jpg" max="3" maxlength="3" class="d-none" (change)="onFileInputAdd($event?.target?.files,3)" #four />
+        </div>
+
+
+    </div>
+
+
+
+</div>

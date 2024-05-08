@@ -1,0 +1,62 @@
+<div class="bg-white p-3 shadow-sm rounded-sm">
+    <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+
+        <span class="tracking-wide">معلومات حول الدفعة</span>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <div class="text-gray-700">
+        <div class="grid md:grid-cols-2 text-sm">
+            <div class="grid grid-cols-2">
+                <div class="px-4 py-2 font-semibold">انشأ من قبل</div>
+                <div class="px-4 py-2">{{data.createdBy.firstName}}&nbsp;{{data.createdBy.lastName}}</div>
+            </div>
+            <div class="grid grid-cols-2">
+                <div class="px-4 py-2 font-semibold">أنشئت في </div>
+                <div class="px-4 py-2">{{data.createdAt | date: 'short'}} </div>
+            </div>
+            <div class="grid grid-cols-2">
+                <div class="px-4 py-2 font-semibold">الحالة</div>
+                <div class="px-4 py-2" style="color: orange ;font-weight: bold"
+                     *ngIf="data.status === 'PENDING'">ينتظر
+                </div>
+                <div class="px-4 py-2" style="color: green ;font-weight: bold"
+                     *ngIf="data.status === 'APPROVED'">تقبل بنجاح
+                </div>
+                <div class="px-4 py-2" style="color: red ;font-weight: bold"
+                     *ngIf="data.status === 'REJECTED'">مرفوض
+                </div>
+            </div>
+            <div  *ngIf="data.status === 'REJECTED'" class="grid grid-cols-2">
+                <div class="px-4 py-2 font-semibold">سبب الرفض</div>
+                <div style="color: orangered" class="px-4 py-2">{{data.rejectMessage}}</div>
+            </div>
+            <div class="grid grid-cols-2">
+                <div class="px-4 py-2 font-semibold">اسم البنك</div>
+                <div class="px-4 py-2">
+                    <a class="text-blue-800" >{{data.bankName}}</a>
+                </div>
+            </div>
+            <div class="grid grid-cols-2">
+                <div class="px-4 py-2 font-semibold">رقم حساب</div>
+                <div style="color: red" class="px-4 py-2">{{data.accountNumber}}</div>
+            </div>
+            <div class="grid grid-cols-2">
+                <div class="px-4 py-2 font-semibold">رقم الآيبان </div>
+                <div class="px-4 py-2">{{data.ibanNumber}} </div>
+            </div>
+            <div class="grid grid-cols-2">
+                <div class="px-4 py-2 font-semibold">مقدار </div>
+                <div class="px-4 py-2">{{data.amount}} (SAR)</div>
+            </div>
+            <div class="grid grid-cols-2">
+                <div class="px-4 py-2 font-semibold">تم التحديث في </div>
+                <div class="px-4 py-2">{{data.updatedAt |date: 'short'}} </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<br>
+<button mat-button (click)="closeDiag()">خروج</button>

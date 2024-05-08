@@ -1,0 +1,144 @@
+<button class="close" mat-raised-button (click)="closeDiag()">X</button>
+<main class="w-full">
+    <div class=" p-0">
+
+        <h1 class="h3 mb-3">المحادثات </h1>
+
+        <div class="card">
+
+            <div class="row g-0">
+
+                <div class="col-12 col-lg-12 col-xl-12">
+                    <mat-spinner style="margin:0 auto;"
+                        mode="indeterminate" *ngIf="!messagesLoaded"></mat-spinner>
+                    <div *ngIf="messagesLoaded" style="height:300px; overflow:
+                        auto " id="chatCard" class="position-relative">
+
+                        <div class="chat-messages p-4">
+                            <ng-container *ngFor="let message of messages">
+
+                                <!--                            VENDOR-->
+                                <div *ngIf="message?.user?.role === 'VENDOR' "
+                                    class="chat-message-right pb-4">
+                                    <div>
+                                        <img
+                                            src="{{server+message.user?.image?.public_url}}"
+                                            onerror="this.src='https://bootdey.com/img/Content/avatar/avatar2.png';"
+                                            class="rounded-circle mr-1"
+                                            alt="vendeur" width="40"
+                                            height="40">
+                                        <div class="text-muted small text-nowrap
+                                            mt-2">البائع </div>
+                                        <div class="text-muted small text-nowrap
+                                            mt-2 time-chat">{{message.createdAt
+                                            | date:'short'}}</div>
+                                    </div>
+                                    <div class="flex-shrink-1 bg-light rounded
+                                        py-2 px-3 mr-3" style="text-align:
+                                        left">
+                                        <div class="font-weight-bold mb-1"
+                                            style="font-weight: bolder">{{message.user.firstName}}&nbsp;{{message.user.lastName}}</div>
+                                        <div><p>{{message.content}}</p></div>
+                                        <div *ngIf="message?.image"><a
+                                                [href]="server+message.image?.public_url"
+                                                [attr.data-lightbox]="message.id"
+                                                data-title="{{message?.image?.filename}}"><img
+                                                    src="{{server+message.image?.public_url}}"
+                                                    class=" mr-1" alt="VEND"
+                                                    width="100" height="100"></a></div>
+                                        <div *ngIf="message?.video"><video
+                                                src="{{server+message?.video?.public_url}}"
+                                                class=" mr-1" alt="vendeurV"
+                                                width="200" height="200"
+                                                controls> <source
+                                                    src="{{server+message?.video?.public_url}}"></video></div>
+                                    </div>
+                                </div>
+                                <!--                           CLIENT-->
+                                <div *ngIf="message?.user?.role === 'CUSTOMER' "
+                                    class="chat-message-right pb-4">
+                                    <div>
+                                        <img
+                                            src="{{server+message.user?.image?.public_url}}"
+                                            onerror="this.src='https://bootdey.com/img/Content/avatar/avatar3.png';"
+                                            class="rounded-circle mr-1"
+                                            alt="client" width="40" height="40">
+                                        <div class="text-muted small text-nowrap
+                                            mt-2">الحريف </div>
+                                        <div class="text-muted small text-nowrap
+                                            mt-2">{{message.createdAt |
+                                            date:'short'}}</div>
+                                    </div>
+                                    <div class="flex-shrink-1 bg-light rounded
+                                        py-2 px-3 mr-3" style="text-align:
+                                        left">
+                                        <div class="font-weight-bold mb-1"
+                                            style="font-weight: bolder">{{message.user.firstName}}&nbsp;{{message.user.lastName}}</div>
+                                        <div><p>{{message.content}}</p></div>
+                                        <div *ngIf="message?.image"><a
+                                                [href]="server+message.image?.public_url"
+                                                [attr.data-lightbox]="message.id"
+                                                data-title="{{message?.image?.filename}}"><img
+                                                    src="{{server+message.image?.public_url}}"
+                                                    class=" mr-1" alt="CLIENT"
+                                                    width="100" height="100"></a></div>
+                                        <div *ngIf="message?.video"><video
+                                                src="{{server+message?.video?.public_url}}"
+                                                class=" mr-1" alt="CLIENTV"
+                                                width="200" height="200"
+                                                controls> <source
+                                                    src="{{server+message?.video?.public_url}}"></video></div>
+                                    </div>
+                                </div>
+                                <!--                            ADMIN-->
+                                <div *ngIf="message?.admin"
+                                    class="chat-message-left pb-4 ">
+                                    <div>
+                                        <img
+                                            src="{{server+message.admin?.image?.public_url}}"
+                                            onerror="this.src='https://bootdey.com/img/Content/avatar/avatar1.png';"
+                                            class="rounded-circle mr-1"
+                                            alt="admin" width="40" height="40">
+                                        <div class="text-muted small text-nowrap
+                                            mt-2">المشرف </div>
+                                        <div class="text-muted small text-nowrap
+                                            mt-2">{{message.createdAt |
+                                            date:'short'}}</div>
+                                    </div>
+                                    <div class="flex-shrink-1 bg-light rounded
+                                        py-2 px-3 ml-3" style="text-align:
+                                        right">
+                                        <div class="font-weight-bold mb-1"
+                                            style="font-weight: bolder">أنا
+                                        </div>
+                                        {{message.content}}
+                                    </div>
+                                </div>
+                            </ng-container>
+
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="flex-grow-0 py-3 px-4 border-top">
+                        <div class="input-group">
+                            <mat-form-field appearance="outline">
+                                <input matInput id="inputSendMessage"
+                                    [(ngModel)]="adminMessage" type="text"
+                                    class="form-control w-full"
+                                    placeholder="أدخل رسالتك "/>
+                                
+                            </mat-form-field>
+                            <button mat-raised-button color="primary" tabindex="-1" (click)="sendMessage()"
+                                    class="btn btn-primary">ارسل </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

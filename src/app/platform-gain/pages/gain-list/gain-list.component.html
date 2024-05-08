@@ -1,0 +1,126 @@
+
+
+
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+    <ng-template let-brand="brand" matMenuContent>
+
+    </ng-template>
+</mat-menu>
+
+<div class="w-full h-full flex flex-col">
+    <div   class="px-gutter pt-6 pb-20 bg-primary flex-none">
+        <div class="p-gutter" *ngIf="statistic"  
+            gdColumns="1fr 1fr 1fr"
+            gdColumns.lt-md="1fr 1fr 1fr"
+            gdColumns.lt-sm="1fr"
+            gdGap="16px"
+            vexContainer>
+
+            <vex-widget-quick-value-center
+                [icon]="icGroup"
+                iconClass="text-primary bg-primary-light"
+                gdColumn.lt-sm="1"
+                label="مكاسب الطلبات"
+                value="{{statistic.totalTranscationEarnings.total}} دينار
+                "></vex-widget-quick-value-center>
+            <vex-widget-quick-value-center
+                [icon]="icGroup"
+                iconClass="text-primary bg-primary-light"
+                gdColumn.lt-sm="1"
+                label="مكاسب الاشتراكات"
+                value="{{statistic.totalSubscriptionEarnings.total}} دينار
+                "></vex-widget-quick-value-center>
+            <vex-widget-quick-value-center
+                [icon]="icGroup"
+                iconClass="text-primary bg-primary-light"
+                gdColumn.lt-sm="1"
+                label="إجمالي الأرباح"
+                value="{{ statistic.totalSubscriptionEarnings.total + statistic.totalTranscationEarnings.total }} دينار
+                "
+                ></vex-widget-quick-value-center>
+
+        </div>
+        <div class="flex items-center" vexContainer>
+            <button
+
+                @scaleIn
+                class="sm:hidden text-primary-contrast"
+                mat-icon-button
+                type="button">
+                <mat-icon [icIcon]="icMenu"></mat-icon>
+            </button>
+            <h2
+                class="headline text-primary-contrast m-0 flex items-center
+                w-full max-w-xxxs mr-6">
+
+                <span @fadeInRight class="ml-4 block">
+                    مكاسب المنصة
+                </span>
+            </h2>
+
+
+
+
+        </div>
+    </div>
+
+    <div class="-mt-14 pt-0 overflow-hidden flex" vexContainer>
+        <mat-drawer-container class="bg-transparent flex-auto flex">
+            <mat-drawer-content class="p-gutter pt-0 flex-auto flex
+                items-start">
+                <div class="card h-full overflow-hidden flex-auto">
+                    <table
+                        @stagger
+                        [dataSource]="dataSource"
+                        class="w-full"
+                        mat-table
+                        matSort>
+                        <!--- Note that these columns can be defined in any order.
+                          The actual rendered columns are set as a property on the row definition" -->
+                        <!-- Text Column -->
+                        <ng-container *ngFor="let column of columns">
+                            <ng-container
+                                *ngIf="column.type === 'text'"
+                                [matColumnDef]="column.property">
+                                <th *matHeaderCellDef mat-header-cell
+                                    mat-sort-header>
+                                    {{ column.label }}
+                                </th>
+                                <td *matCellDef="let row"
+                                    [ngClass]="column.cssClasses" mat-cell>
+                                    {{ translateType(row[column.property]) }}
+                                </td>
+                            </ng-container>
+                            <ng-container
+                                *ngIf="column.type === 'Date'"
+                                [matColumnDef]="column.property">
+                                <th *matHeaderCellDef mat-header-cell
+                                    mat-sort-header>
+                                    {{ column.label }}
+                                </th>
+                                <td *matCellDef="let row"
+                                    [ngClass]="column.cssClasses" mat-cell>
+                                    {{ row[column.property] | date: 'dd/MM/yyyy
+                                    hh:mm a' }}
+                                </td>
+                            </ng-container>
+
+                        </ng-container>
+
+                        <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+                        <tr
+                            *matRowDef="let row; columns: visibleColumns"
+                            @fadeInUp
+                            class="hover:bg-hover trans-ease-out cursor-pointer"
+                            mat-row></tr>
+                    </table>
+
+                    <mat-paginator
+                        [pageSizeOptions]="pageSizeOptions"
+                        [pageSize]="pageSize"
+                        class="sticky left-0"></mat-paginator>
+                </div>
+            </mat-drawer-content>
+        </mat-drawer-container>
+    </div>
+</div>

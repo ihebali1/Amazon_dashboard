@@ -1,0 +1,136 @@
+<div class="mt-6 flex flex-col md:flex-row md:items-start">
+    <div class="flex-auto">
+        <div class="card  mt-6 ">
+            <div class="px-gutter py-4 border-b">
+                <h2 class="title m-0"> تعديل الموصل</h2>
+            </div>
+            <form (ngSubmit)="save()" [formGroup]="editTransporter">
+                <div class="px-6 py-4" fxLayout="column">
+                    <div
+                      fxLayout="row"
+                      fxLayout.lt-sm="column"
+                      fxLayoutGap="16px"
+                      fxLayoutGap.lt-sm="0"
+                    >
+                      <mat-form-field appearance="outline" fxFlex="auto">
+                        <mat-label>الاسم</mat-label>
+                        <input
+                          placeholder="أدخل الاسم"
+                          type="text"
+                          cdkFocusInitial
+                          formControlName="firstName"
+                          matInput
+                          required
+                        />
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" fxFlex="auto">
+                        <mat-label>اللقب</mat-label>
+                        <input
+                          placeholder="أدخل اللقب"
+                          type="text"
+                          cdkFocusInitial
+                          formControlName="lastName"
+                          matInput
+                          required
+                        />
+                      </mat-form-field>
+                    </div>
+        
+                    <div
+                      fxLayout="row"
+                      fxLayout.lt-sm="column"
+                      fxLayoutGap="16px"
+                      fxLayoutGap.lt-sm="0"
+                    >
+                      <mat-form-field appearance="outline" fxFlex="auto">
+                        <mat-label>البريد الإلكتروني</mat-label>
+                        <input
+                          type="email"
+                          placeholder="أدخل البريد الإلكتروني "
+                          cdkFocusInitial
+                          formControlName="email"
+                          matInput
+                          required
+                        />
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" fxFlex="auto">
+                        <mat-label>الهاتف</mat-label>
+                        <input
+                          type="phone"
+                          placeholder="أدخل الهاتف "
+                          cdkFocusInitial
+                          formControlName="phone"
+                          matInput
+                          required
+                        />
+                      </mat-form-field>
+                    </div>
+                    <hr />
+        
+                    <div
+                      fxLayout="row"
+                      fxLayout.lt-sm="column"
+                      fxLayoutGap="16px"
+                      fxLayoutGap.lt-sm="0"
+                    >
+                      <mat-form-field appearance="outline" fxFlex="auto">
+                        <mat-label>تاريخ الولادة </mat-label>
+                        <input
+                          formControlName="birthDate"
+                          matInput
+                          formControlName="birthDate"
+                      
+                          [min]="minBirthdate"
+                          [max]="maxxBirthdate"
+                          [matDatepicker]="picker"
+                          placeholder="أدخل تاريخ الولادة  "
+                          required
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="picker"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+        
+                      <mat-form-field appearance="outline" fxFlex="auto">
+                        <mat-label>تاريخ إنتهاء صلوحية رخصة القيادة </mat-label>
+                        <input
+                          type="date"
+                    
+                          placeholder="أدخل تاريخ إنتهاء صلوحية رخصة القيادة  "
+                          formControlName="driveLicenceExpiry"
+                          matInput
+                          required
+                        />
+                      
+                      </mat-form-field>
+                    </div>
+        
+                    <div
+                      fxLayout="row"
+                      fxLayout.lt-sm="column"
+                      fxLayoutGap="16px"
+                      fxLayoutGap.lt-sm="0"
+                      class="p-2"
+                    >
+                    <vex-image [desactivateAddImages]="false" *ngIf="transporter.driveLicence && transporter.greyCards[0]" [imagePreview]="transporter.driveLicence" [imagesPreview]="transporter.greyCards" (imagesChanged)="imagesChangedHandler($event)" (mainImageChanged)="mainImageChangedHandler($event)"></vex-image>
+                    </div>
+                    <hr />
+                    <div
+                      fxLayout="row"
+                      class="mt-4"
+                      fxLayoutAlign="end center"
+                      fxLayoutGap="8px"
+                    >
+                      <button color="primary" mat-raised-button type="submit">
+                        تعديل
+                      </button>
+                    </div>
+                  </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>

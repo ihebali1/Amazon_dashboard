@@ -1,0 +1,39 @@
+<form (ngSubmit)="update()" [formGroup]="editGrPermission">
+    <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+        <h1>
+            تحيين بيانات الأذونات
+        </h1>
+    </div>
+
+    <mat-divider class="-mx-6 text-border"></mat-divider>
+
+    <mat-dialog-content fxLayout="column">
+
+
+        <mat-form-field appearance="outline" class="mt-6 flex-auto">
+            <mat-label>الاسم</mat-label>
+            <input placeholder="أدخل الاسم" cdkFocusInitial formControlName="name" matInput>
+        </mat-form-field>
+        <br/>
+        <mat-form-field appearance="outline" class="mt-6 flex-auto">
+            <mat-label>الأذونات</mat-label>
+            <mat-select  multiple  [(value)]="permissionsSelected" >
+                <mat-option *ngFor="let permission of permissions" [value]="permission" >{{permission.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br/>
+        <mat-form-field appearance="outline" class="mt-6 flex-auto">
+            <mat-label>المشرفين </mat-label>
+            <mat-select  multiple  [(value)]="adminsSelected" >
+                <mat-option *ngFor="let admin of admins" [value]="admin">{{admin.firstName}}&nbsp;{{admin.lastName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close type="button">إلغاء</button>
+        <button color="primary" mat-button type="submit">تحديث</button>
+    </mat-dialog-actions>
+</form>

@@ -1,0 +1,259 @@
+<div class="w-full h-full flex flex-col">
+  <div class="px-gutter pt-6 pb-20 bg-primary flex-none">
+    <div class="flex items-center" vexContainer>
+      <button @scaleIn class="sm:hidden text-primary-contrast" mat-icon-button
+        type="button">
+        <mat-icon [icIcon]="icMenu"></mat-icon>
+      </button>
+      <h2 class="headline text-primary-contrast m-0 flex items-center w-full
+        max-w-xxxs mr-6">
+
+        <span @fadeInRight class="ml-4 block"> قائمة الشكاوى</span>
+      </h2>
+
+      <div
+        class="hidden sm:flex items-center bg-card rounded-full overflow-hidden
+        relative ltr:pl-5 rtl:pr-5 h-12 max-w-md w-full shadow-8 mx-auto">
+        <ic-icon [icon]="icSearch" class="text-secondary flex-none" size="24px"></ic-icon>
+        <select class="border-0 h-12 mx-8 outline-none ltr:pl-4 rtl:pr-4
+          placeholder:text-secondary bg-card flex-auto"
+          (change)=onChange($event.target.value)>
+          <option value="">جميع الشكاوى</option>
+          <option value="PENDING">الشكاوى المعلقة</option>
+          <option value="ACCEPTED">الشكاوى المقبولة</option>
+          <option value="REJECTED">الشكاوى المرفوضة</option>
+          <option value="INREVIEW">الشكاوى قيد المراجعة</option>
+        </select>
+
+
+      </div>
+      <button *ngIf="showAll==true" (click)="getMineReports()" class="mx-2
+        rounded" mat-raised-button>
+        إظهار الشكاوى المتكفل بها فقط
+      </button>
+      <button *ngIf="showAll==false" (click)="showAllReports()" class="mx-2
+        rounded" mat-raised-button>
+        إظهار جميع الشكاوى
+      </button>
+    </div>
+  </div>
+
+  <div class="-mt-14 pt-0 overflow-hidden flex" vexContainer>
+    <mat-drawer-container class="bg-transparent flex-auto flex">
+      <mat-drawer-content class="p-gutter pt-0 flex-auto flex items-start">
+        <div class="card h-full overflow-hidden flex-auto">
+
+          <table @stagger [dataSource]="dataSource" class="w-full" mat-table
+            matSort>
+            <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+            <!-- Contact Column -->
+            <ng-container matColumnDef="contact">
+              <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
+              <td *matCellDef="let row" mat-cell>
+                <div class="flex">
+                  <a (click)="$event.stopPropagation()"
+                    class="w-8 h-8 leading-none flex items-center justify-center
+                    hover:bg-hover text-primary bg-primary-light"
+                    mat-icon-button>
+                  </a>
+
+                  <a (click)="$event.stopPropagation()"
+                    class="w-8 h-8 leading-none flex items-center justify-center
+                    ml-1 hover:bg-hover text-teal bg-teal-light"
+                    mat-icon-button>
+                  </a>
+
+                  <a (click)="$event.stopPropagation()"
+                    class="w-8 h-8 leading-none flex items-center justify-center
+                    ml-1 hover:bg-hover text-green bg-green-light"
+                    mat-icon-button>
+                  </a>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Label Column -->
+            <ng-container matColumnDef="labels">
+              <th *matHeaderCellDef class="uppercase" mat-header-cell
+                mat-sort-header>
+                Labels
+              </th>
+              <td *matCellDef="let row" mat-cell>
+                <div (click)="$event.stopPropagation()" fxLayoutAlign="start
+                  center" fxLayoutGap="4px">
+                  <div *ngFor="let label of row.labels"
+                    [ngClass]="[label.textClass, label.bgClass]"
+                    class="rounded px-2 py-1 font-medium text-xs" fxFlex="none">
+                    {{ label.text }}
+                  </div>
+                  <div (click)="labelSelect.open()"
+                    class="text-secondary bg-base text-hint cursor-pointer
+                    hover:bg-hover" fxFlex="none" fxLayout="row"
+                    fxLayoutAlign="center center"></div>
+                  <mat-select #labelSelect="matSelect"
+                    (selectionChange)="onLabelChange($event, row)"
+                    [value]="row.labels" class="invisible w-0 h-0 text-sm"
+                    fxFlex="0 1 0px" multiple>
+                    <mat-option *ngFor="let label of labels" [value]="label">
+                      <div [ngClass]="label.previewClass"
+                        class="h-6 w-6 align-middle ltr:mr-2 rtl:ml-2 rounded
+                        inline-block"></div>
+                      <span>{{ label.text }}</span>
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Text Column -->
+            <ng-container *ngFor="let column of columns">
+              <ng-container *ngIf="column.type === 'text' && column.label !==
+                'انشأ من قبل'"
+                [matColumnDef]="column.property">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                  {{ column.label }}
+                </th>
+                <td *matCellDef="let row" [ngClass]="column.cssClasses"
+                  mat-cell>
+                  {{ row[column.property] }}
+                </td>
+              </ng-container>
+              <ng-container *ngIf="column.type === 'text' && column.label ===
+                'انشأ من قبل'"
+                [matColumnDef]="column.property">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                  {{ column.label }}
+                </th>
+                <td *matCellDef="let row" [ngClass]="column.cssClasses"
+                  mat-cell>
+                  <strong>{{ row[column.property].firstName }} &nbsp;
+                    {{ row[column.property].lastName }}</strong>
+                </td>
+              </ng-container>
+              <ng-container *ngIf="column.type === 'Date'"
+                [matColumnDef]="column.property">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                  {{ column.label }}
+                </th>
+                <td *matCellDef="let row" [ngClass]="column.cssClasses"
+                  mat-cell>
+                  {{ row[column.property] | date }}
+                </td>
+              </ng-container>
+              <ng-container *ngIf="column.type === 'badge'"
+                [matColumnDef]="column.property">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                  {{ column.label }}
+                </th>
+                <td *matCellDef="let row" [ngClass]="column.cssClasses"
+                  mat-cell>
+                  <p style="color: rgb(21, 21, 21); font-weight: bold"
+                    *ngIf="row[column.property] === 'PENDING'">
+                    شكوى في الانتظار
+                  </p>
+                  <p style="color: rgb(255, 179, 0); font-weight: bold"
+                    *ngIf="row[column.property] === 'INREVIEW'">
+                    تحت المراجعة
+                  </p>
+                  <p style="color: green; font-weight: bold"
+                    *ngIf="row[column.property] === 'ACCEPTED'">
+                    شكوى مقبولة
+                  </p>
+                  <p style="color: red; font-weight: bold"
+                    *ngIf="row[column.property] === 'REJECTED'">
+                    شكوى مرفوضة
+                  </p>
+                </td>
+              </ng-container>
+              <ng-container *ngIf="column.type === 'button' && column.property
+                === 'messages'"
+                [matColumnDef]="column.property">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>{{
+                  column.label }}</th>
+                <td *matCellDef="let row" [ngClass]="column.cssClasses"
+                  mat-cell>
+                  <button mat-raised-button (click)="OpenConversations(row)">
+                    المحادثة
+                  </button>
+                </td>
+              </ng-container>
+              <ng-container *ngIf="
+                column.type === 'button' && column.property === 'invistigate'
+                " [matColumnDef]="column.property">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>{{
+                  column.label }}</th>
+                <td *matCellDef="let row" [ngClass]="column.cssClasses"
+                  mat-cell>
+                  <button *ngIf="row.status === 'PENDING' " mat-raised-button
+                    color="accent" (click)="Invistigate(row)">
+                    التكفل بالتقرير
+                  </button>
+                </td>
+              </ng-container>
+              <ng-container *ngIf="column.type === 'button' && column.property
+                === 'approve'"
+                [matColumnDef]="column.property">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>{{
+                  column.label }}</th>
+                <td *matCellDef="let row" [ngClass]="column.cssClasses"
+                  mat-cell>
+                  <button class="mx-1" *ngIf="row.status === 'INREVIEW'"
+                    mat-raised-button
+                    (click)="makeDecision(row, 'ACCEPTED')">
+                    قبول الشكوى
+                  </button>
+                  <button *ngIf="row.status === 'INREVIEW'" mat-raised-button
+                    (click)="makeDecision(row, 'REJECTED')">
+                    رفض الشكوى
+                  </button>
+                </td>
+              </ng-container>
+              <ng-container *ngIf="column.type === 'button' && column.property
+                === 'delete'"
+                [matColumnDef]="column.property">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>{{
+                  column.label }}</th>
+                <td *matCellDef="let row" [ngClass]="column.cssClasses"
+                  mat-cell>
+                  <button *ngIf="row.active" mat-button class="btn btn-success"
+                    style="background-color: red; color: white"
+                    (click)="openDialogForActDesc(row)">
+                    حظر
+                  </button>
+                  <button *ngIf="!row.active" mat-button class="btn btn-success"
+                    style="background-color: green; color: white"
+                    (click)="openDialogForActDesc(row)">
+                    تفعيل
+                  </button>
+                </td>
+              </ng-container>
+              <ng-container *ngIf="column.type === 'button' && column.property
+                === 'details'"
+                [matColumnDef]="column.property">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>{{
+                  column.label }}</th>
+                <td *matCellDef="let row" [ngClass]="column.cssClasses"
+                  mat-cell>
+                  <button mat-raised-button color="primary"
+                    (click)="openDialogForPreview(row)">
+                    تفاصيل
+                  </button>
+                </td>
+              </ng-container>
+            </ng-container>
+
+            <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+            <tr *matRowDef="let row; columns: visibleColumns" @fadeInUp
+              class="hover:bg-hover trans-ease-out cursor-pointer" mat-row></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="pageSizeOptions"
+            [pageSize]="pageSize" class="sticky left-0">
+          </mat-paginator>
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
+
+</div>

@@ -1,0 +1,80 @@
+<button class="close" mat-button (click)="closeDiag()">X</button>
+
+<mat-tab-group animationDuration="0ms">
+    <mat-tab label="تفاصيل الموصل">
+        <div class="px-6 py-4" fxLayout="column">
+            <div
+              fxLayout="row"
+              fxLayout.lt-sm="column"
+              fxLayoutGap="16px"
+              fxLayoutGap.lt-sm="0"
+            >
+              <mat-form-field appearance="outline" fxFlex="auto">
+                <mat-label>الاسم</mat-label>
+                <input readonly matInput [(ngModel)]="data.firstName" type="text">
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="auto">
+                <mat-label>اللقب</mat-label>
+                <input readonly matInput [(ngModel)]="data.lastName" type="text">
+              </mat-form-field>
+            </div>
+
+            <div
+              fxLayout="row"
+              fxLayout.lt-sm="column"
+              fxLayoutGap="16px"
+              fxLayoutGap.lt-sm="0"
+            >
+              <mat-form-field appearance="outline" fxFlex="auto">
+                <mat-label>البريد الإلكتروني</mat-label>
+                <input readonly matInput [(ngModel)]="data.email" type="text">
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="auto">
+                <mat-label>الهاتف</mat-label>
+                <input readonly matInput [(ngModel)]="data.phone" type="text">
+              </mat-form-field>
+            </div>
+            <hr />
+
+            <div
+              fxLayout="row"
+              fxLayout.lt-sm="column"
+              fxLayoutGap="16px"
+              fxLayoutGap.lt-sm="0"
+            >
+              <mat-form-field appearance="outline" fxFlex="auto">
+                <mat-label>تاريخ الولادة </mat-label>
+                <input readonly matInput [ngModel]="data.birthDate | date:'yyyy-MM-dd'" type="date" >
+          
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" fxFlex="auto">
+                <mat-label>تاريخ إنتهاء صلوحية رخصة القيادة </mat-label>
+             
+                <input readonly matInput [ngModel]="data.driveLicenceExpiry | date:'yyyy-MM-dd'" type="date" >
+                <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            
+     
+          </div>
+
+
+      
+
+    </mat-tab>
+
+    <mat-tab label="البطاقات">
+        <vex-image [desactivateAddImages]="true" *ngIf="transporter.driveLicence && transporter.greyCards[0]" [imagePreview]="transporter.driveLicence" [imagesPreview]="transporter.greyCards"></vex-image>
+    </mat-tab>
+</mat-tab-group>

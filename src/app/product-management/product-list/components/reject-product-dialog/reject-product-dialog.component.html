@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>
+    أدخل سبب الرفض
+</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="outline" class="w-full" >
+    <mat-label> سبب الرفض </mat-label>
+    <input matInput [formControl]="rejectMessage">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">إلغاء</button>
+  <button mat-button  (click)="updateStatus()" cdkFocusInitial>رفض المنتج</button>
+</div>

@@ -1,0 +1,45 @@
+import {Account} from "./Account";
+
+export interface UserP {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: number;
+    gender: null;
+    password: string;
+    otp: number;
+    dateBirth: Date;
+    isEmailVerfied: boolean;
+    stripeId: string;
+    createdAt: Date;
+    updatedAt: Date;
+    vendorState: string;
+    isApproved: boolean;
+    role: string;
+    isBusinessInfoFullfilled: boolean;
+    isSellerInfoFullfilled: boolean;
+    isPersonalInfoFullfilled: boolean;
+    isMarketPlaceFullfilled: boolean;
+    isBillingFullfilled: boolean;
+    isStoreFullfilled: boolean;
+    isVerificationFullfilled: boolean;
+    businessType: string;
+    businessName: string;
+    numberCompany: string;
+    adressLine: string;
+    adressLine2: string;
+    town: string;
+    region: string;
+    postalCode: number;
+    favoriteRecieve: string;
+    verificationLanguage: string;
+    proofidentity: string;
+    dateExpiry: Date;
+    numberCreditCard: number;
+    nameCard: string;
+    monthExpire: number;
+    yearExpire: number;
+    storeName: string;
+    account: Account;
+}

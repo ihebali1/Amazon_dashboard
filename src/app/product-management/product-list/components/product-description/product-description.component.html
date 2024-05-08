@@ -1,0 +1,62 @@
+<div class="p-10">
+    <div class="grid grid-cols-12 gap-4 ">
+        <div>
+            <label>وصف المنتج</label>
+        </div>
+        <div class="col-span-11">
+            <div class="flex flex-row gap-4">
+                <mat-form-field appearance="outline" class="w-full" >
+                    <mat-label></mat-label>
+                    <textarea matInput readonly [(ngModel)]="productInfo.description" type="text">
+                    </textarea>
+            
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div>
+            <label>ميزات المنتج الرئيسية</label>
+        </div>
+        <div class="col-span-11">
+            <div *ngFor="let feature of productInfo.features" class="flex flex-row gap-4">
+                <mat-form-field appearance="outline" class="w-full" >
+                    <mat-label></mat-label>
+                    <input matInput readonly [(ngModel)]="feature.value" type="text" />
+                </mat-form-field>
+                
+            </div>
+
+        </div>
+
+        <div>
+            <label>إخلاء المسؤولية القانونية</label>
+        </div>
+        <div class="col-span-11">
+            <div class="flex flex-row gap-4">
+                <mat-form-field appearance="outline" class="w-full" >
+                    <mat-label></mat-label>
+                    <input matInput readonly [(ngModel)]="productInfo.legalDisclaimer" type="text" />
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div>
+            <label>تحذير</label>
+        </div>
+        <div class="col-span-11">
+            <div *ngFor="let warning of productInfo.warnings" class="flex flex-row gap-4">
+                <mat-form-field appearance="outline" class="w-full" >
+                    <input readonly matInput [(ngModel)]="warning.value" type="text" />
+                </mat-form-field>
+                
+            </div>
+
+  
+
+        </div>
+    </div>
+    <div class="basis-1/4">
+       
+    
+    </div>
+</div>

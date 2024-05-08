@@ -1,0 +1,27 @@
+<h1>
+    قائمة المشرفين</h1>
+<table  style="max-height: 200px;overflow: auto">
+    <tr>
+        <th>الاسم الكامل</th>
+        <th>
+            البريد الإلكتروني</th>
+        <th>
+            رقم الهاتف
+        </th>
+        <th>
+            الحالة
+        </th>
+    </tr>
+    <tr *ngFor="let admin of data">
+        <td>{{admin.firstName}}&nbsp; {{admin.lastName }}</td>
+
+        <td>{{admin.email }}</td>
+        <td>{{admin.phone }}</td>
+        <td style="color:green" *ngIf="admin.active">
+            مفعل</td>
+        <td style="color:red" *ngIf="!admin.active">غير مفعل</td>
+    </tr>
+
+</table>
+<hr>
+<button  matDialogClose mat-button>اغلاق</button>

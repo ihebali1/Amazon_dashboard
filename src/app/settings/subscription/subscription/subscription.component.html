@@ -1,0 +1,89 @@
+<div @stagger>
+    <div class="bg-card py-16 px-gutter">
+      <h1 @fadeInUp class="display-2 mt-0 mb-4 text-center">منصة الدفع</h1>
+      <h2 @fadeInUp class="subheading-2 text-hint text-center max-w-lg mx-auto m-0">تسعير بسيط وشفاف.</h2>
+    </div>
+  
+    <div class="my-12 container"
+         fxLayout="row"
+         fxLayout.xs="column"
+         fxLayoutAlign="start start"
+         fxLayoutAlign.xs="start stretch"
+         fxLayoutGap="24px">
+  
+       <div @fadeInUp class="card p-6" fxFlex fxLayout="column" fxLayoutAlign="start center">
+        <div class="inline-block p-6 rounded-full text-primary mx-auto flex items-center justify-center bg-primary-light">
+          <ic-icon [icon]="icBeenhere" size="48px"></ic-icon>
+        </div>
+  
+        <h2 class="headline my-6">INDIVIDUAL</h2>
+          <form [formGroup]="indivFormSubs" class="example-form">
+         
+            <div *ngIf="infoIndiv" class="body-1">
+            <mat-form-field appearance="outline" class="example-full-width" >
+              <mat-label>Number Card</mat-label>
+              <input formControlName="priceIndiv" type="Number" matInput >
+              {{infoIndiv?.priceIndiv}}
+              <br>
+              {{infoIndiv?.description}}
+            </mat-form-field>
+            </div>
+          </form>       
+        
+  
+        <button class="rounded-full max-w-full w-200" (click)="subsIndiv(infoIndiv.id)" color="primary" mat-raised-button type="button">Save</button>
+      </div>
+  
+      <div @fadeInUp class="card p-6" fxFlex fxLayout="column" fxLayoutAlign="start center">
+        <div class="inline-block p-6 rounded-full text-primary mx-auto flex items-center justify-center bg-primary-light">
+          <ic-icon [icon]="icStars" size="48px"></ic-icon>
+        </div>
+  
+        <h2 class="headline my-6">PROFESSIONAL</h2>
+  
+        <form [formGroup]="proFormSubs" class="example-form">
+         
+          <div *ngIf= "infoPro" class="body-1">
+          <mat-form-field appearance="outline" class="example-full-width" >
+            <mat-label>Number Card</mat-label>
+            <input formControlName="pricePro" type="Number" matInput >
+            {{infoPro?.pricePro}}
+            <br>
+            {{infoPro?.description}}
+  
+          </mat-form-field>
+          </div>
+        </form> 
+  
+        <button class="rounded-full max-w-full w-200" (click)="subsPro(infoPro.id)" color="primary" mat-raised-button type="button">Save</button>
+      </div>
+  
+    
+    
+    </div>
+  
+    <div @fadeInUp class="bg-card py-16 px-gutter footer">
+      <h2 class="display-1 mt-0 mb-4 text-center"> !لا يزال لديك أسئلة</h2>
+      <h3 class="subheading-2 text-hint text-center max-w-lg mx-auto m-0">A wonderful serenity has taken possession of my
+        entire
+        soul, like these sweet
+        mornings of spring which I enjoy with my whole heart.</h3>
+  
+      <div class="mt-16 max-w-3xl mx-auto flex flex-col md:flex-row">
+        <a class="text-center p-6 border rounded md:w-1/2 md:mx-2"
+           routerLinkActive>
+          <ic-icon [icon]="icPhoneInTalk" class="text-hint" size="42px"></ic-icon>
+          <h3 class="title mb-0 mt-4">+1 (840) 423-3404</h3>
+          <h4 class="subheading-2 m-0 text-hint">Call us anytime for a quick solution</h4>
+        </a>
+  
+        <a class="text-center p-6 border rounded md:w-1/2 md:mx-2"
+           routerLinkActive>
+          <ic-icon [icon]="icMail" class="text-hint" size="42px"></ic-icon>
+          <h3 class="title mb-0 mt-4">support@example.com</h3>
+          <h4 class="subheading-2 m-0 text-hint">Send us a mail to resolve your issue</h4>
+        </a>
+      </div>
+    </div>
+  </div>
+  

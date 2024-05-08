@@ -1,0 +1,124 @@
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+    <ng-template let-brand="brand" matMenuContent>
+
+    </ng-template>
+</mat-menu>
+
+
+
+
+<div class="w-full h-full flex flex-col">
+    <div class="px-gutter pt-6 pb-20 bg-primary flex-none">
+        <div class="flex items-center" vexContainer>
+            <button @scaleIn class="sm:hidden text-primary-contrast" mat-icon-button type="button">
+                <mat-icon [icIcon]="icMenu"></mat-icon>
+            </button>
+            <h2 class="headline text-primary-contrast m-0 flex items-center w-full max-w-xxxs mr-6">
+
+                <span @fadeInRight class="ml-4 block">
+                    قائمة اللافتات
+                </span>
+            </h2>
+            <div
+                class="hidden px-4 sm:flex items-center bg-card rounded-full overflow-hidden relative ltr:pl-5 rtl:pr-5 h-12 max-w-md w-full shadow-8 mx-auto">
+                <ic-icon [icon]="icSearch" class="text-secondary flex-none" size="24px"></ic-icon>
+
+                <select 
+
+                (change)= selectType($event.target.value)
+                    class="border-0 h-12 px-4 outline-none ltr:pl-4 rtl:pr-4 placeholder:text-secondary bg-card flex-auto">
+
+                    <option value="">
+                        كل اللافتات
+                    </option>
+                    <option value="HOME_HEADER">
+                        لافتات الصفحة الرئيسية
+                    </option>
+
+                    <option value="DEPARTMENT_HEADER">
+                        لافتات صفحة القسم
+                    </option>
+                    <option value="DEPARTMENT_CARD">
+                        لافتات بطاقات الأقسام
+                    </option>
+                    <option value="AD">
+                        لافتات إعلانية
+                    </option>
+                </select>
+
+            </div>
+
+
+
+            <button class="ml-4" color="primary" fxFlex="none" mat-mini-fab matTooltip="Add Department" type="button"
+                (click)="openBannerCreateDialog()">
+                <mat-icon [icIcon]="icAdd"></mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div class="-mt-14 pt-0 overflow-hidden flex" vexContainer>
+        <mat-drawer-container class="bg-transparent flex-auto flex">
+            <mat-drawer-content class="p-gutter pt-0 flex-auto flex items-start">
+                <div class="card h-full overflow-hidden flex-auto">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div *ngFor="let banner of banners">
+                            <mat-card class="example-card m-4">
+                                <mat-card-header>
+                                    <div mat-card-avatar class="example-header-image"></div>
+                                    <mat-card-title>{{translateBannerType(banner.type)}}</mat-card-title>
+                                    <mat-card-subtitle>
+                                        {{translateLinkType(banner.linkType)}}
+
+
+
+                                    </mat-card-subtitle>
+                                </mat-card-header>
+                                <img mat-card-image style="height: 200px;" src="{{server + banner.image.public_url}}"
+                                    alt="Photo of a Shiba Inu">
+                                <mat-card-content>
+                                    <p *ngIf="banner.linkType == 'PRODUCT' ">
+                                        {{banner?.simpleProduct?.arName}}
+                                        {{banner?.parentListing?.arName}}
+                                    </p>
+
+                                    <p *ngIf="banner.linkType == 'DEPARTMENT' ">
+                                        {{banner?.department?.arName}}
+
+                                    </p>
+
+                                    <p *ngIf="banner.linkType == 'VENDOR' ">
+                                        {{banner?.vendor?.businessInfo?.storeName}}
+
+                                    </p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <button (click)="redirect(banner)" mat-flat-button color="primary" class="mx-4">
+                                        <mat-icon>open_in_new</mat-icon>
+                                    </button>
+                                    <button (click)="removeBanner(banner.id)" class="mx-4" mat-flat-button
+                                        color="accent">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+
+                                    <button *ngIf="banner.isActive == true" class="mx-4"
+                                        (click)="updateBannerStatus(banner.id)" mat-flat-button
+                                        style="background-color: green; color:white">
+                                        نشطة
+                                    </button>
+                                    <button *ngIf="banner.isActive == false" class="mx-4"
+                                        (click)="updateBannerStatus(banner.id)" mat-flat-button
+                                        style="background-color: orange;color: white;">
+                                        غير نشط
+                                    </button>
+                                </mat-card-actions>
+                            </mat-card>
+                        </div>
+
+                    </div>
+
+                </div>
+            </mat-drawer-content>
+        </mat-drawer-container>
+    </div>
+</div>
